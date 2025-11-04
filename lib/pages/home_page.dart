@@ -95,6 +95,54 @@ class _HomePageState extends State<HomePage> {
         statusBarBrightness: Brightness.dark,
       ),
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: AppColors.primary,
+          automaticallyImplyLeading: false,
+          leading: Padding(
+            padding: const EdgeInsets.only(
+              left: 16.0,
+            ), // Tambahkan sedikit padding jika perlu
+            child: Image.asset('assets/img/logo-light.png', width: 70),
+          ),
+          actions: [
+            students.isNotEmpty
+                ? InkWell(
+                  onTap:
+                      () => _showMyDialog(
+                        context,
+                        activeStudent,
+                        students,
+                        _setActiveStudent,
+                      ),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 5,
+                    ),
+                    margin: const EdgeInsets.only(right: 16),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.check_circle,
+                          color: Colors.white,
+                          size: 15,
+                        ),
+                        const Gap(5),
+                        Text(
+                          activeStudent ?? "-",
+                          style: AppTypography.bodySmallWhite,
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+                : const SizedBox.shrink(),
+          ],
+        ),
         body: ListView(
           children: [
             buildHeader(context, activeStudent, students, _setActiveStudent),
@@ -120,9 +168,9 @@ Widget buildHeader(
   return Stack(
     children: [
       Container(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         width: double.infinity,
-        height: 190,
+        height: 145,
         decoration: const BoxDecoration(
           color: AppColors.primary,
           borderRadius: BorderRadius.only(
@@ -132,52 +180,10 @@ Widget buildHeader(
         ),
       ),
       Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.asset('assets/img/logo-light.png', width: 50),
-                students.isNotEmpty
-                    ? InkWell(
-                      onTap:
-                          () => _showMyDialog(
-                            context,
-                            activeStudent,
-                            students,
-                            setActiveStudent,
-                          ),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 5,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.2),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.check_circle,
-                              color: Colors.white,
-                              size: 15,
-                            ),
-                            const Gap(5),
-                            Text(
-                              activeStudent ?? "-",
-                              style: AppTypography.bodySmallWhite,
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                    : const SizedBox.shrink(),
-              ],
-            ),
-            const Gap(10),
             Text("Tagihan Bulan Ini", style: AppTypography.bodySmallWhite),
             Text("Rp 245.000", style: AppTypography.heading2White),
             const Gap(5),
@@ -334,7 +340,7 @@ void _showMyDialog(
 
 Widget buildNews() {
   return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 16),
+    padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 16),
     child: Container(
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(

@@ -120,31 +120,34 @@ class _AppLayoutState extends State<AppLayout> {
       onWillPop: () => _onWillPop(context),
       child: Scaffold(
         body: _pages[_currentIndex],
-        floatingActionButton: SizedBox(
-          height: 70,
-          width: 70,
-          child: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.3),
-                  blurRadius: 20,
-                  spreadRadius: 3,
-                  offset: const Offset(0, 8),
-                ),
-              ],
-            ),
-            child: FloatingActionButton(
-              backgroundColor: AppColors.primary,
-              shape: const CircleBorder(),
-              elevation: 0, // kita matikan shadow default
-              onPressed: () {
-                setState(() {
-                  _currentIndex = 2;
-                });
-              },
-              child: const Icon(Icons.add, size: 35, color: Colors.white),
+        floatingActionButton:  Transform.translate(
+          offset: const Offset(0, 15),
+          child: SizedBox(
+            height: 55,
+            width: 55,
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.primary.withValues(alpha: 0.3),
+                    blurRadius: 20,
+                    spreadRadius: 3,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
+              ),
+              child: FloatingActionButton(
+                backgroundColor: AppColors.primary,
+                shape: const CircleBorder(),
+                elevation: 0, // kita matikan shadow default
+                onPressed: () {
+                  setState(() {
+                    _currentIndex = 2;
+                  });
+                },
+                child: const Icon(Icons.add, size: 35, color: Colors.white),
+              ),
             ),
           ),
         ),
