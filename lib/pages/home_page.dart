@@ -146,6 +146,7 @@ class _HomePageState extends State<HomePage> {
         body: ListView(
           children: [
             buildHeader(context, activeStudent, students, _setActiveStudent),
+            const Gap(15),
             buildNews(),
             const Gap(15),
             buildPaymentComplete(),
@@ -297,7 +298,20 @@ void _showMyDialog(
               ...students.map((student) {
                 final isActive = student.name == activeStudent;
                 return GestureDetector(
-                  onTap: () => onSelect(student),
+                  onTap: () async {
+                    final service = StudentService();
+                    final success = await service.setPrimaryStudent(student.id);
+                    if (success) {
+                      onSelect(student); // update UI atau state parent
+                    } else {
+                      showCustomToast(
+                        // ignore: use_build_context_synchronously
+                        context: context,
+                        message: "Ada gangguan, coba beberapa saat lagi",
+                        type: ToastType.error,
+                      );
+                    }
+                  },
                   child: Container(
                     margin: const EdgeInsets.only(bottom: 10),
                     padding: const EdgeInsets.all(10),
@@ -340,7 +354,7 @@ void _showMyDialog(
 
 Widget buildNews() {
   return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 16),
+    padding: const EdgeInsets.symmetric(horizontal: 16),
     child: Container(
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(

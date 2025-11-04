@@ -59,4 +59,25 @@ class StudentService {
       throw Exception("Gagal ambil data siswa");
     }
   }
+
+  Future<bool> setPrimaryStudent(int studentId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    final url = Uri.parse('$baseUrl/student/set-primary/$studentId');
+
+    final response = await http.post(
+      url,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      return data['success'] == true;
+    } else {
+      return false;
+    }
+  }
 }
